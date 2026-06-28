@@ -9,8 +9,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     inkscape \
     fonts-dejavu-core \
     curl \
-    && a2dismod mpm_worker || true \
-    && a2enmod mpm_prefork \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
     && apt-get clean \
@@ -66,4 +64,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
 EXPOSE 80
 
 # Start Apache
-CMD ["apache2-foreground"]
+CMD ["/bin/bash", "-c", "rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*; exec apache2-foreground"]
