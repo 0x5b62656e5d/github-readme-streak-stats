@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     inkscape \
     fonts-dejavu-core \
     curl \
+    && a2dismod mpm_worker || true \
+    && a2enmod mpm_prefork \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
     && apt-get clean \
